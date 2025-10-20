@@ -6,6 +6,10 @@ import ConsentNotice from '../src/components/ConsentNotice';
 import MetaPixel from '../src/components/MetaPixel';
 import { getSettings } from '../src/lib/settings';
 import { Metadata } from 'next';
+import { Montserrat } from 'next/font/google';
+import './globals.css';
+
+const montserrat = Montserrat({ subsets: ['latin'], variable: '--font-montserrat', display: 'swap' });
 
 export const metadata: Metadata = {
   title: 'South African Healthcare Practices',
@@ -15,11 +19,13 @@ export const metadata: Metadata = {
 const Layout = ({ children }: { children: React.ReactNode }) => {
   const settings = getSettings();
   return (
-    <html lang="en">
-      <body>
+    <html lang="en" className={montserrat.variable}>
+      <body className="bg-white text-navy-900">
         <SkipToContent />
         <Header />
-        <main>{children}</main>
+        <main id="main-content" className="min-h-[60vh] focus:outline-none">
+          {children}
+        </main>
         <Footer />
         <ConsentNotice />
         <MetaPixel

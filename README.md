@@ -38,6 +38,65 @@ Tips to stay within budget:
 - Serverless contact form with consent checkbox
 - Basic Lighthouse performance budget and accessibility focus
 
+## UI Style Guide
+
+Tokens
+- Font: Montserrat (loaded via next/font). CSS var: `--font-montserrat`. Tailwind `font-sans` maps to it.
+- Colors: premium navy/slate/white palette
+   - Navy scale: `navy-50` … `navy-900`; Brand aliases: `brand` (DEFAULT, light, dark)
+   - Text: default `text-navy-900`; Muted `text-navy-800/90` or `text-white/80` on dark
+- Radii: use `rounded-2xl` for primary surfaces, `rounded-3xl` sparingly for hero/CTA
+- Shadows: `shadow-soft` and `shadow-soft-lg` for gentle elevation
+- Spacing: balanced rhythm via `py-16 md:py-20` sections; use `gap-6`/`gap-8`
+
+Accessibility
+- Focus rings are visible and consistent: `focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-navy-400`
+- Skip link: a visually hidden link becomes visible on focus; component `SkipToContent` targets `#main-content`
+- Contrast: colors chosen to meet WCAG AA. If in doubt, prefer `navy-800` on white and `white` on `navy-800+`
+
+Motion
+- Hover and entrance effects are subtle and reduced-motion aware. Global transitions prefer `duration-250 ease-gentle`
+- Respect prefers-reduced-motion: heavy animations are disabled in CSS
+
+Reusable components
+- Hero: `src/components/ui/Hero.tsx`
+   - Props: `eyebrow?, title, subtitle?, ctaPrimary?, ctaSecondary?, align? ('left'|'center')`
+- Section: `src/components/ui/Section.tsx`
+   - Props: `as?, contained? (default true), padded? (default true)`
+- Card: `src/components/ui/Card.tsx`
+   - Props: `title?, as?, onClick?` with soft elevation + hover lift
+- CTA: `src/components/ui/CTA.tsx`
+   - Props: `href?, variant ('primary'|'secondary'|'ghost'), size ('sm'|'md'|'lg')`
+
+Examples
+```tsx
+import Hero from '@/components/ui/Hero';
+import CTA from '@/components/ui/CTA';
+import Section from '@/components/ui/Section';
+import Card from '@/components/ui/Card';
+
+export default function Page() {
+   return (
+      <>
+         <Hero
+            eyebrow="Trusted, patient-first care"
+            title="Movement restored, life improved"
+            subtitle="Evidence-based therapy tailored to your goals."
+            ctaPrimary={<CTA href="#contact">Book an assessment</CTA>}
+            ctaSecondary={<CTA href="/resources" variant="secondary">View resources</CTA>}
+         />
+         <Section>
+            <div className="grid md:grid-cols-3 gap-6">
+               <Card title="Knee therapy">Recover stability and reduce pain with targeted protocols.</Card>
+               <Card title="Shoulder rehab">Improve mobility with progressive loading strategies.</Card>
+               <Card title="Spine care">Function-first plans for long-term resilience.</Card>
+            </div>
+         </Section>
+      </>
+   );
+}
+```
+
 ## Project Structure
 
 ```
