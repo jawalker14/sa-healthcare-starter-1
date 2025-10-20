@@ -1,0 +1,20 @@
+{
+  "extends": "lighthouse:default",
+  "settings": {
+    "performance": {
+      "maxPotentialFid": 100,
+      "maxFirstContentfulPaint": 2000,
+      "maxLargestContentfulPaint": 2500,
+      "maxCumulativeLayoutShift": 0.1
+    },
+    "accessibility": {
+      "maxScore": 100
+    },
+    "best-practices": {
+      "maxScore": 100
+    },
+    "seo": {
+      "maxScore": 100
+    }
+  }
+}

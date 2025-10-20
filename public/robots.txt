@@ -1,0 +1,7 @@
+User-agent: *
+Disallow: /api/
+Disallow: /health/
+Disallow: /app/
+Disallow: /src/
+Disallow: /content/
+Allow: /
