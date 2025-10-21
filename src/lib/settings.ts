@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 
 export type Settings = {
-  contacts: { phone: string; email: string };
+  contacts: { phone: string; email: string; whatsapp?: string };
   address: { street: string; city: string; province: string; postalCode: string };
   hours: Record<string, string>;
   social: { facebook?: string; twitter?: string; instagram?: string };
@@ -20,7 +20,7 @@ export function getSettings(): Settings {
   } catch (e) {
     console.error('Failed to read settings.json', e);
     return {
-      contacts: { phone: '', email: '' },
+  contacts: { phone: '', email: '', whatsapp: '' },
       address: { street: '', city: '', province: '', postalCode: '' },
       hours: {},
       social: {},

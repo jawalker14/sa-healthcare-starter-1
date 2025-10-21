@@ -1,13 +1,15 @@
 import React from 'react';
+import { getSettings } from '@/lib/settings';
 
 const WhatsAppCTA: React.FC = () => {
-    const whatsappNumber = 'YOUR_WHATSAPP_NUMBER'; // Replace with actual WhatsApp number
+    const { contacts } = getSettings();
+    const whatsappNumber = contacts.whatsapp || contacts.phone || '';
     const message = 'Hello, I would like to inquire about your services.';
 
     return (
         <div className="fixed bottom-5 right-5 z-40">
             <a
-                href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`}
+                href={whatsappNumber ? `https://wa.me/${encodeURIComponent(whatsappNumber)}?text=${encodeURIComponent(message)}` : '#'}
                 className="flex items-center justify-center h-14 w-14 bg-emerald-600 text-white rounded-full shadow-soft hover:shadow-soft-lg hover:bg-emerald-700 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-emerald-400 transition duration-250 ease-gentle"
                 aria-label="Chat with us on WhatsApp"
             >
