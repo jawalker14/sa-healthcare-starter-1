@@ -1,17 +1,38 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 const ConsentNotice: React.FC = () => {
-    const [isVisible, setIsVisible] = useState(true);
+    const COOKIE_NAME = 'cookieConsent';
+
+    const hasConsentCookie = () => {
+        if (typeof document === 'undefined') return false;
+        const encodedName = encodeURIComponent(COOKIE_NAME) + '=';
+        return document.cookie.split('; ').some((c) => c.startsWith(encodedName));
+    };
+
+    const setCookie = (name: string, value: string, maxAgeSeconds = 31536000) => {
+        if (typeof document === 'undefined') return;
+        const cookie = `${encodeURIComponent(name)}=${encodeURIComponent(value)}; path=/; max-age=${maxAgeSeconds}; samesite=lax`;
+        document.cookie = cookie;
+    };
+
+    // Start visible for SSR compatibility; hide after mount if cookie exists.
+    const [isVisible, setIsVisible] = useState<boolean>(true);
+
+    useEffect(() => {
+        if (hasConsentCookie()) {
+            setIsVisible(false);
+        }
+    }, []);
 
     const handleAccept = () => {
+        setCookie(COOKIE_NAME, 'true');
         setIsVisible(false);
-        // Logic to handle consent acceptance (e.g., setting a cookie)
     };
 
     const handleDecline = () => {
+        setCookie(COOKIE_NAME, 'false');
         setIsVisible(false);
-        // Logic to handle consent decline (e.g., setting a cookie)
     };
 
     if (!isVisible) return null;
