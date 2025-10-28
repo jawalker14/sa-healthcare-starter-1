@@ -79,6 +79,21 @@ export async function getPostMetaBySlug(slug: string): Promise<{ title: string; 
   }
 }
 
+export async function getPartialBySlug(name: string): Promise<{ html: string } | null> {
+  const PARTIALS_DIR = path.join(process.cwd(), 'content', 'partials');
+  try {
+    const filePath = path.join(PARTIALS_DIR, `${name}.mdx`);
+    if (!fs.existsSync(filePath)) return null;
+    const raw = fs.readFileSync(filePath, 'utf8');
+    const { content } = matter(raw);
+    const html = marked.parse(content) as string;
+    return { html };
+  } catch (e) {
+    console.error('getPartialBySlug failed', e);
+    return null;
+  }
+}
+
 // Legacy helper used by some pages in this starter
 export async function getMdxContent(key?: string): Promise<any> {
   const PAGES_DIR = path.join(process.cwd(), 'content', 'pages');

@@ -16,7 +16,7 @@ const Footer: React.FC = () => {
                 </p>
                                 <div className="pt-2 space-y-2">
                                         <p className="text-white/80 text-sm">
-                                            <a href={`mailto:${s.contacts.email}`} className="underline">{s.contacts.email}</a> · <a href={`tel:${s.contacts.phone}`} className="underline">{s.contacts.phone}</a> · <a href={whatsappHref} aria-label="Chat with us on WhatsApp" data-cta="whatsapp_footer" className="underline" onClick={() => { trackWhatsAppClick('footer'); pixelContact('whatsapp'); }}>WhatsApp</a>
+                                            <a href={`mailto:${s.contacts.email}`} className="underline">{s.contacts.email}</a> · <a href={`tel:${s.contacts.phone}`} className="underline">{s.contacts.phone}</a> · <a href={whatsappHref} aria-label="Chat with us on WhatsApp" data-cta="whatsapp_footer" className="underline" onClick={() => { trackWhatsAppClick('footer'); pixelContact('whatsapp'); }}>WhatsApp</a> · <a href="/compliance" className="underline">Compliance</a>
                                         </p>
                                         <p className="text-white/70">&copy; {new Date().getFullYear()} Your Practice Name. All rights reserved.</p>
                                 </div>
