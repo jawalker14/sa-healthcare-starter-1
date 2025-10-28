@@ -4,9 +4,11 @@ import Container from '@/components/ui/Container';
 import ContactForm from '@/components/ContactForm';
 import { getSettings } from '@/lib/settings';
 
+const base = (process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000').replace(/\/$/, '');
 export const metadata: Metadata = {
   title: 'Contact',
   description: 'Get in touch with our practice.',
+  alternates: { canonical: `${base}/contact` },
 };
 
 export default function ContactPage() {

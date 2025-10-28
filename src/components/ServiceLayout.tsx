@@ -2,6 +2,7 @@ import React from 'react';
 import Section from '@/components/ui/Section';
 import Container from '@/components/ui/Container';
 import CTA from '@/components/ui/CTA';
+import Schema from '@/components/Schema';
 
 type FAQ = { q: string; a: string };
 
@@ -10,16 +11,38 @@ type Props = {
   intro: string;
   problem: string[];
   solution: string[];
-  process: string[];
+  steps: string[];
   benefits: string[];
   faqs?: FAQ[];
   bookingHref?: string;
   whatsappHref?: string;
+  path?: string;
 };
 
-const ServiceLayout: React.FC<Props> = ({ title, intro, problem, solution, process, benefits, faqs = [], bookingHref = '/booking', whatsappHref = '#' }) => {
+const ServiceLayout: React.FC<Props> = ({ title, intro, problem, solution, steps, benefits, faqs = [], bookingHref = '/booking', whatsappHref = '#', path }) => {
+  const base = (process.env.NEXT_PUBLIC_SITE_URL || (typeof window !== 'undefined' ? window.location.origin : '')) || '';
+  const urlPath = path || (typeof window !== 'undefined' ? window.location.pathname : '') || '';
+  const url = `${(base || '').replace(/\/$/, '')}${urlPath}`;
+  const breadcrumb = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: `${(base || '').replace(/\/$/, '')}/` },
+      { '@type': 'ListItem', position: 2, name: 'Services', item: `${(base || '').replace(/\/$/, '')}/services` },
+      { '@type': 'ListItem', position: 3, name: title, item: url },
+    ],
+  } as const;
+  const faqSchema = faqs.length
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+      }
+    : null;
   return (
     <>
+      <Schema schema={breadcrumb} />
+      {faqSchema ? <Schema schema={faqSchema} /> : null}
       <Section className="bg-white">
         <Container>
           <h1 className="text-3xl md:text-4xl font-bold text-navy-900">{title}</h1>
@@ -53,7 +76,7 @@ const ServiceLayout: React.FC<Props> = ({ title, intro, problem, solution, proce
         <Container>
           <h2 className="text-2xl font-bold text-navy-900">Process</h2>
           <ol className="mt-3 list-decimal pl-6 text-navy-800/90 space-y-1">
-            {process.map((s, i) => (<li key={i}>{s}</li>))}
+            {steps.map((s, i) => (<li key={i}>{s}</li>))}
           </ol>
         </Container>
       </Section>

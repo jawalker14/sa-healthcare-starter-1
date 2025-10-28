@@ -12,7 +12,7 @@ export default function ShoulderServicePage() {
   const settings = getSettings();
   const whatsappHref = buildWhatsAppUrl(settings.contacts.whatsapp || settings.contacts.phone, 'Hello, I would like to enquire about shoulder rehab.');
   return (
-    <ServiceLayout
+  <ServiceLayout
       title="Shoulder rehab"
       intro="Improve comfort and function with a clear plan that fits your daily routine."
       problem={[
@@ -25,7 +25,7 @@ export default function ShoulderServicePage() {
         'Education on pacing, load management, and symptom response',
         'Progressive mobility and strength work matched to your needs',
       ]}
-      process={[
+  steps={[
         'Understand your goals and daily demands',
         'Plan a practical program with clear steps',
         'Review, progress, and adapt based on your response',
@@ -35,10 +35,11 @@ export default function ShoulderServicePage() {
         'Confidence in what to do and when',
         'Support to return to meaningful activities',
       ]}
-      faqs={[
+  faqs={[
         { q: 'Will I need to stop activity?', a: 'Often not; we focus on adjusting load while you recover.' },
         { q: 'How long will it take?', a: 'Timelines vary; we’ll set expectations based on your assessment.' },
       ]}
+  path="/services/shoulder"
       bookingHref="/booking"
       whatsappHref={whatsappHref}
     />

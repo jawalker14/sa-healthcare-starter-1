@@ -12,7 +12,7 @@ export default function KneeServicePage() {
   const settings = getSettings();
   const whatsappHref = buildWhatsAppUrl(settings.contacts.whatsapp || settings.contacts.phone, 'Hello, I would like to enquire about knee therapy.');
   return (
-    <ServiceLayout
+  <ServiceLayout
       title="Knee therapy"
       intro="Individualised assessment and progressive loading to support recovery and function."
       problem={[
@@ -25,7 +25,7 @@ export default function KneeServicePage() {
         'Education on pacing and activity modification where helpful',
         'Progressive strength and control work aligned to your context',
       ]}
-      process={[
+  steps={[
         'Understand your story, goals, and key movements',
         'Plan a clear, realistic program and home strategies',
         'Review progress and adapt based on outcomes that matter to you',
@@ -35,10 +35,11 @@ export default function KneeServicePage() {
         'Confidence to progress activity at the right pace',
         'Tools to support long-term function',
       ]}
-      faqs={[
+  faqs={[
         { q: 'Do I need imaging first?', a: 'Not always. We can advise if imaging may help after an assessment.' },
         { q: 'Can I continue gym or sport?', a: 'Often yes, with adjustments. We will guide safe progression.' },
       ]}
+  path="/services/knee"
       bookingHref="/booking"
       whatsappHref={whatsappHref}
     />

@@ -1,8 +1,10 @@
 import type { Metadata } from 'next';
 
+const base = (process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000').replace(/\/$/, '');
 export const metadata: Metadata = {
   title: 'Services',
   description: 'Evidence-based care tailored to your needs. Explore our core services.',
+  alternates: { canonical: `${base}/services` },
 };
 
 export default function ServicesIndexPage() {

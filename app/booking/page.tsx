@@ -6,9 +6,11 @@ import BookingEmbed from '@/components/BookingEmbed';
 import { getSettings } from '@/lib/settings';
 import { buildWhatsAppUrl } from '@/lib/cta';
 
+const base = (process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000').replace(/\/$/, '');
 export const metadata: Metadata = {
   title: 'Booking',
   description: 'Schedule an appointment online.',
+  alternates: { canonical: `${base}/booking` },
 };
 
 export default function BookingPage() {
