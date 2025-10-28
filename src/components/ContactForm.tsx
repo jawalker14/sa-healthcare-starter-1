@@ -2,6 +2,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Input, TextArea } from '@/components/ui/Input';
 import { trackFormSubmit } from '@/lib/analytics';
+import { pixelContact } from '@/lib/pixel';
 
 const ContactForm: React.FC = () => {
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
@@ -36,6 +37,7 @@ const ContactForm: React.FC = () => {
       setStatus('success');
       form.reset();
   trackFormSubmit('contact', 'success');
+  pixelContact('form');
     } catch (err) {
       setStatus('error');
       setError('Something went wrong. Please try again later.');

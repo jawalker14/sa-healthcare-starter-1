@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useRef } from 'react';
 import { trackBookingClick } from '@/lib/analytics';
+import { pixelSchedule } from '@/lib/pixel';
 
 type Props = {
   src: string;
@@ -15,8 +16,9 @@ export default function BookingEmbed({ src }: Props) {
         const data = typeof event.data === 'string' ? JSON.parse(event.data) : event.data;
         // Calendly emits event = 'calendly.event_scheduled'
         if (data?.event === 'calendly.event_scheduled') {
-          // Track booking scheduled in GA4; Meta Pixel handled in its component
+          // Track booking scheduled in GA4 and Meta Pixel
           trackBookingClick('scheduled');
+          pixelSchedule({ source: 'calendly' });
         }
       } catch {
         // ignore

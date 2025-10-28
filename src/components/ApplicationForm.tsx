@@ -2,6 +2,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Input, TextArea, Select } from '@/components/ui/Input';
 import { trackFormSubmit } from '@/lib/analytics';
+import { pixelLead } from '@/lib/pixel';
 
 type Props = {
   roles: string[];
@@ -47,6 +48,7 @@ const ApplicationForm: React.FC<Props> = ({ roles }) => {
       setStatus('success');
       form.reset();
   trackFormSubmit('application', 'success');
+  pixelLead('application_form');
     } catch (err) {
       setStatus('error');
       setError('Something went wrong. Please try again later.');
