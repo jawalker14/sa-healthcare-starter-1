@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useRef, useState } from 'react';
 import { Input, TextArea } from '@/components/ui/Input';
+import { trackFormSubmit } from '@/lib/analytics';
 
 const ContactForm: React.FC = () => {
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
@@ -34,9 +35,11 @@ const ContactForm: React.FC = () => {
       if (!res.ok) throw new Error('Request failed');
       setStatus('success');
       form.reset();
+  trackFormSubmit('contact', 'success');
     } catch (err) {
       setStatus('error');
       setError('Something went wrong. Please try again later.');
+  trackFormSubmit('contact', 'error');
     }
   };
 

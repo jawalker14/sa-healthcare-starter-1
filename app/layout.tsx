@@ -4,6 +4,8 @@ import Footer from '../src/components/Footer';
 import SkipToContent from '../src/components/SkipToContent';
 import ConsentNotice from '../src/components/ConsentNotice';
 import MetaPixel from '../src/components/MetaPixel';
+import GoogleAnalytics from '../src/components/GoogleAnalytics';
+import AnalyticsLinkTracker from '../src/components/AnalyticsLinkTracker';
 import LiveChat from '../src/components/LiveChat';
 import { getSettings } from '../src/lib/settings';
 import { Metadata } from 'next';
@@ -29,6 +31,10 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         </main>
         <Footer />
         <ConsentNotice />
+  {/* Load GA4 only with Analytics consent */}
+  <GoogleAnalytics />
+  {/* Passive listeners for analytics events like file downloads */}
+  <AnalyticsLinkTracker />
         <MetaPixel
           enabled={settings.metaPixel?.enabled}
           pixelId={settings.metaPixel?.pixelId}

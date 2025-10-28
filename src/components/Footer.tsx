@@ -1,5 +1,6 @@
 import React from 'react';
 import { getSettings } from '@/lib/settings';
+import { trackWhatsAppClick } from '@/lib/analytics';
 import { buildWhatsAppUrl } from '@/lib/cta';
 
 const Footer: React.FC = () => {
@@ -14,7 +15,7 @@ const Footer: React.FC = () => {
                 </p>
                                 <div className="pt-2 space-y-2">
                                         <p className="text-white/80 text-sm">
-                                            <a href={`mailto:${s.contacts.email}`} className="underline">{s.contacts.email}</a> · <a href={`tel:${s.contacts.phone}`} className="underline">{s.contacts.phone}</a> · <a href={whatsappHref} aria-label="Chat with us on WhatsApp" data-cta="whatsapp_footer" className="underline">WhatsApp</a>
+                                            <a href={`mailto:${s.contacts.email}`} className="underline">{s.contacts.email}</a> · <a href={`tel:${s.contacts.phone}`} className="underline">{s.contacts.phone}</a> · <a href={whatsappHref} aria-label="Chat with us on WhatsApp" data-cta="whatsapp_footer" className="underline" onClick={() => trackWhatsAppClick('footer')}>WhatsApp</a>
                                         </p>
                                         <p className="text-white/70">&copy; {new Date().getFullYear()} Your Practice Name. All rights reserved.</p>
                                 </div>

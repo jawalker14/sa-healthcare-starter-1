@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useRef, useState } from 'react';
 import { Input, TextArea, Select } from '@/components/ui/Input';
+import { trackFormSubmit } from '@/lib/analytics';
 
 type Props = {
   roles: string[];
@@ -45,9 +46,11 @@ const ApplicationForm: React.FC<Props> = ({ roles }) => {
       if (!res.ok) throw new Error('Request failed');
       setStatus('success');
       form.reset();
+  trackFormSubmit('application', 'success');
     } catch (err) {
       setStatus('error');
       setError('Something went wrong. Please try again later.');
+  trackFormSubmit('application', 'error');
     }
   };
 
