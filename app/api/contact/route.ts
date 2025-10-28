@@ -1,12 +1,16 @@
 import { NextResponse } from 'next/server';
 
+function isEmail(v: string) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+}
+
 export async function POST(request: Request) {
-    // Accept JSON or form submissions
     const contentType = request.headers.get('content-type') || '';
-    let name: string | undefined;
-    let email: string | undefined;
-    let message: string | undefined;
-    let consent: boolean | undefined;
+    let name = '';
+    let email = '';
+    let message = '';
+    let consent = false;
+    let honeypot = '';
 
     try {
         if (contentType.includes('application/json')) {
@@ -15,6 +19,7 @@ export async function POST(request: Request) {
             email = (data?.email ?? '').toString().trim();
             message = (data?.message ?? '').toString().trim();
             consent = data?.consent === true || data?.consent === 'true' || data?.consent === 'on';
+            honeypot = (data?.website ?? '').toString().trim();
         } else {
             const form = await request.formData();
             name = (form.get('name') ?? '').toString().trim();
@@ -22,17 +27,25 @@ export async function POST(request: Request) {
             message = (form.get('message') ?? '').toString().trim();
             const consentRaw = form.get('consent');
             consent = consentRaw !== null && consentRaw !== undefined && consentRaw !== '';
+            honeypot = (form.get('website') ?? '').toString().trim();
         }
     } catch {
         return NextResponse.json({ error: 'Invalid request body' }, { status: 400 });
     }
 
-    // Validate the incoming data (minimum-data fields only)
-    if (!name || !email || !message || consent !== true) {
+    // Basic spam: honeypot should be empty
+    if (honeypot) {
+        return NextResponse.json({ error: 'Invalid submission' }, { status: 400 });
+    }
+
+    // Validate minimal required data and consent
+    if (!name || !email || !isEmail(email) || !message || consent !== true) {
         return NextResponse.json({ error: 'Invalid data' }, { status: 400 });
     }
 
-    // Here you would typically handle the form submission, e.g., send an email or save to a database
-    // For now, just return success
+    // Data minimization: construct safe payload (extend later with email or queue)
+    const payload = { name, email, message: message.slice(0, 2000) };
+    console.log('Contact submission:', payload);
+
     return NextResponse.json({ success: true });
 }
