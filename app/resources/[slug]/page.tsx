@@ -1,4 +1,5 @@
-import { getAllPosts, getPostBySlug } from '@/lib/mdx';
+import { getAllPosts, getPostBySlug, getPostMetaBySlug } from '@/lib/mdx';
+import type { Metadata } from 'next';
 
 type Props = { params: { slug: string } };
 
@@ -16,4 +17,19 @@ export default async function ResourcePostPage({ params }: Props) {
 export async function generateStaticParams() {
   const posts = await getAllPosts();
   return posts.map((p) => ({ slug: p.slug }));
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const base = (process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000').replace(/\/$/, '');
+  const meta = await getPostMetaBySlug(params.slug);
+  const title = meta?.title || params.slug;
+  const description = meta?.description || 'Resource article';
+  const canonical = `${base}/resources/${params.slug}`;
+  return {
+    title,
+    description,
+    alternates: { canonical },
+    openGraph: { url: canonical, title, description },
+    twitter: { title, description },
+  };
 }

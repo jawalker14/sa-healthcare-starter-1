@@ -15,7 +15,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 	const data = getBlogSourceBySlug(params.slug);
 	const title = (data?.frontmatter?.title as string | undefined) || params.slug;
 	const description = (data?.frontmatter?.excerpt as string | undefined) || 'Blog post';
-	return { title, description };
+	const base = (process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000').replace(/\/$/, '');
+	const canonical = `${base}/blog/${params.slug}`;
+	return { title, description, alternates: { canonical }, openGraph: { url: canonical, title, description }, twitter: { title, description } };
 }
 
 export default function BlogPostPage({ params }: Props) {

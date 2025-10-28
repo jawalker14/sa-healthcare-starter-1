@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import type { Metadata } from 'next';
 import { getAllPosts } from '@/lib/mdx';
 
 export default async function ResourcesPage() {
@@ -19,3 +20,8 @@ export default async function ResourcesPage() {
     </div>
   );
 }
+
+export const metadata: Metadata = {
+  title: 'Resources',
+  description: 'Practical, evidence-informed articles to help you understand and manage common concerns.',
+};

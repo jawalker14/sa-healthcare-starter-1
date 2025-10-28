@@ -62,6 +62,23 @@ export async function getPostBySlug(slug: string): Promise<{ title: string; html
   }
 }
 
+export async function getPostMetaBySlug(slug: string): Promise<{ title: string; description?: string; date?: string } | null> {
+  try {
+    const filePath = path.join(POSTS_DIR, `${slug}.mdx`);
+    const mdPath = path.join(POSTS_DIR, `${slug}.md`);
+    const target = fs.existsSync(filePath) ? filePath : mdPath;
+    if (!fs.existsSync(target)) return null;
+    const raw = fs.readFileSync(target, 'utf8');
+    const { data, content } = matter(raw);
+    const title = (data.title as string | undefined) || content.match(/^#\s+(.+)$/m)?.[1] || slug;
+    const description = (data.excerpt as string | undefined) || content.split('\n').find((l: string) => l.trim().length > 0 && !l.startsWith('#'))?.trim();
+    return { title, description, date: data.date as string | undefined };
+  } catch (e) {
+    console.error('getPostMetaBySlug failed', e);
+    return null;
+  }
+}
+
 // Legacy helper used by some pages in this starter
 export async function getMdxContent(key?: string): Promise<any> {
   const PAGES_DIR = path.join(process.cwd(), 'content', 'pages');

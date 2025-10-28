@@ -30,3 +30,5 @@ export default function BlogIndexPage() {
 		</Section>
 	);
 }
+
+// metadata declared above
