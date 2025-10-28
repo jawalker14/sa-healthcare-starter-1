@@ -1,5 +1,6 @@
 "use client";
 import { useEffect } from 'react';
+import { isAllowed, onConsentChange } from '@/lib/consent';
 import { usePathname } from 'next/navigation';
 
 type Props = {
@@ -18,7 +19,7 @@ export default function MetaPixel({ enabled, pixelId, bookingUrl }: Props) {
   const pathname = usePathname();
 
   useEffect(() => {
-    if (!enabled || !pixelId || typeof window === 'undefined') return;
+    if (!enabled || !pixelId || typeof window === 'undefined' || !isAllowed('marketing')) return;
     if (!window.fbq) {
       const script = document.createElement('script');
       script.async = true;
@@ -35,11 +36,18 @@ export default function MetaPixel({ enabled, pixelId, bookingUrl }: Props) {
       (window.fbq as any).queue = [];
     }
     (window.fbq as any)('init', pixelId);
+    const off = onConsentChange(() => {
+      // If marketing consent toggles later, re-init if allowed
+      if (isAllowed('marketing') && window.fbq && pixelId) {
+        (window.fbq as any)('init', pixelId);
+      }
+    });
+    return () => off();
   }, [enabled, pixelId]);
 
   // Track page views on navigation
   useEffect(() => {
-    if (!enabled || !pixelId) return;
+  if (!enabled || !pixelId || !isAllowed('marketing')) return;
     window.fbq?.('track', 'PageView');
   }, [enabled, pixelId, pathname]);
 

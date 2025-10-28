@@ -1,5 +1,6 @@
 "use client";
 import React, { useEffect, useRef } from 'react';
+import { isAllowed, onConsentChange } from '@/lib/consent';
 
 type Props = {
   enabled?: boolean;
@@ -21,7 +22,7 @@ export default function LiveChat({ enabled, provider = 'tawk', propertyId, widge
 
   useEffect(() => {
     if (!enabled || loadedRef.current) return;
-    if (!hasConsent()) return; // Require consent
+    if (!isAllowed('marketing')) return; // Require marketing consent
 
     const loadScript = (src: string) => {
       if (!src) return;
@@ -33,7 +34,7 @@ export default function LiveChat({ enabled, provider = 'tawk', propertyId, widge
       loadedRef.current = true;
     };
 
-    if (provider === 'tawk') {
+  if (provider === 'tawk') {
       const pid = propertyId || process.env.NEXT_PUBLIC_TAWK_PROPERTY_ID;
       const wid = widgetId || process.env.NEXT_PUBLIC_TAWK_WIDGET_ID;
       if (pid && wid) {
@@ -42,6 +43,31 @@ export default function LiveChat({ enabled, provider = 'tawk', propertyId, widge
     } else if (provider === 'custom' && scriptUrl) {
       loadScript(scriptUrl);
     }
+    const off = onConsentChange(() => {
+      if (!loadedRef.current && isAllowed('marketing')) {
+        // Trigger load on subsequent consent
+        if (provider === 'tawk') {
+          const pid = propertyId || process.env.NEXT_PUBLIC_TAWK_PROPERTY_ID;
+          const wid = widgetId || process.env.NEXT_PUBLIC_TAWK_WIDGET_ID;
+          if (pid && wid) {
+            const s = document.createElement('script');
+            s.async = true;
+            s.src = `https://embed.tawk.to/${pid}/${wid}`;
+            s.crossOrigin = 'anonymous';
+            document.head.appendChild(s);
+            loadedRef.current = true;
+          }
+        } else if (provider === 'custom' && scriptUrl) {
+          const s = document.createElement('script');
+          s.async = true;
+          s.src = scriptUrl;
+          s.crossOrigin = 'anonymous';
+          document.head.appendChild(s);
+          loadedRef.current = true;
+        }
+      }
+    });
+    return () => off();
   }, [enabled, provider, propertyId, widgetId, scriptUrl]);
 
   return null;
