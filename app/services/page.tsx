@@ -18,6 +18,7 @@ export default function ServicesIndexPage() {
         <li><a className="text-navy-800 underline hover:text-navy-900" href="/services/knee">Knee therapy</a></li>
         <li><a className="text-navy-800 underline hover:text-navy-900" href="/services/shoulder">Shoulder rehab</a></li>
         <li><a className="text-navy-800 underline hover:text-navy-900" href="/services/spine">Spine care</a></li>
+  <li><a className="text-navy-800 underline hover:text-navy-900" href="/services/hip">Hip therapy</a></li>
       </ul>
     </section>
   );
