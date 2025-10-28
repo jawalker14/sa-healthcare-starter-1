@@ -4,6 +4,7 @@ import Footer from '../src/components/Footer';
 import SkipToContent from '../src/components/SkipToContent';
 import ConsentNotice from '../src/components/ConsentNotice';
 import MetaPixel from '../src/components/MetaPixel';
+import LiveChat from '../src/components/LiveChat';
 import { getSettings } from '../src/lib/settings';
 import { Metadata } from 'next';
 import { Montserrat } from 'next/font/google';
@@ -32,6 +33,13 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
           enabled={settings.metaPixel?.enabled}
           pixelId={settings.metaPixel?.pixelId}
           bookingUrl={settings.booking?.url}
+        />
+        <LiveChat
+          enabled={settings.liveChat?.enabled}
+          provider={settings.liveChat?.provider as any}
+          propertyId={settings.liveChat?.propertyId}
+          widgetId={settings.liveChat?.widgetId}
+          scriptUrl={settings.liveChat?.scriptUrl}
         />
       </body>
     </html>

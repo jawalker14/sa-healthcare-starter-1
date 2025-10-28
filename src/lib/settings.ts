@@ -9,6 +9,7 @@ export type Settings = {
   booking?: { enabled?: boolean; url?: string };
   analytics?: { enabled?: boolean; schema?: boolean };
   metaPixel?: { enabled?: boolean; pixelId?: string };
+  liveChat?: { enabled?: boolean; provider?: 'tawk' | 'custom'; propertyId?: string; widgetId?: string; scriptUrl?: string };
 };
 
 const SETTINGS_PATH = path.join(process.cwd(), 'content', 'data', 'settings.json');
@@ -27,6 +28,7 @@ export function getSettings(): Settings {
       booking: { enabled: false, url: '' },
       analytics: { enabled: false, schema: false },
       metaPixel: { enabled: false, pixelId: '' },
+  liveChat: { enabled: false, provider: 'tawk', propertyId: '', widgetId: '', scriptUrl: '' },
     };
   }
 }

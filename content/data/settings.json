@@ -35,5 +35,12 @@
   "metaPixel": {
     "enabled": false,
     "pixelId": ""
+  },
+  "liveChat": {
+    "enabled": false,
+    "provider": "tawk",
+    "propertyId": "",
+    "widgetId": "",
+    "scriptUrl": ""
   }
 }
