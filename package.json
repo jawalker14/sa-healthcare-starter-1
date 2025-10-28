@@ -10,7 +10,7 @@
     "lint": "eslint .",
   "format": "prettier --write .",
   "typecheck": "tsc --noEmit",
-  "check": "pnpm run typecheck && pnpm run lint"
+  "check": "npm run typecheck && npm run lint"
   },
   "dependencies": {
     "next": "latest",

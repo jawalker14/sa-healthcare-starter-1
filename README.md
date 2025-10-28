@@ -217,3 +217,12 @@ The footer component includes compliance information related to HPCSA and POPIA,
 ## License
 
 This project is licensed under the MIT License. See the LICENSE file for more details.
+
+## Quality gates (local)
+
+- Typecheck: `npm run typecheck`
+- Lint: `npm run lint`
+- Build: `npm run build`
+- Start (prod): `npm run start`
+
+If type definitions for Node APIs are missing, ensure `@types/node` is installed and `tsconfig.json` includes `types: ["node"]`.

@@ -40,6 +40,18 @@ export default function NotFound() {
           >
             Contact us
           </Link>
+          <Link
+            href="/blog"
+            className="text-navy-800 underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-navy-400 rounded"
+          >
+            Visit blog
+          </Link>
+          <Link
+            href="/resources"
+            className="text-navy-800 underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-navy-400 rounded"
+          >
+            Browse resources
+          </Link>
         </div>
       </div>
     </div>
