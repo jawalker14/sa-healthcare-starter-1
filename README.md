@@ -3,8 +3,6 @@
 This is a Next.js starter template for South African healthcare practices, designed to be HPCSA and POPIA compliant. It utilizes MDX for content management and Tailwind CSS for styling.
 
 ## Performance budget (targets)
-- LCP: <= 2.5s on 4G (mobile), <= 1.8s on desktop
-- CLS: <= 0.1
 - TBT: <= 200ms (as a proxy for INP stability)
 
 Tips to stay within budget:
@@ -49,6 +47,19 @@ Tokens
 - Shadows: `shadow-soft` and `shadow-soft-lg` for gentle elevation
 - Spacing: balanced rhythm via `py-16 md:py-20` sections; use `gap-6`/`gap-8`
 
+## Go-live checklist
+
+1) Copy `.env.local.example` to `.env.local` and set:
+   - `NEXT_PUBLIC_SITE_URL` to your production domain
+   - `NEXT_PUBLIC_GA4_ID` if using GA4
+2) Update `content/data/settings.json` (contacts, booking URL, optional Pixel/LiveChat)
+3) Run local checks:
+   - `pnpm run typecheck`
+   - `pnpm run lint`
+4) Verify consent behavior:
+   - Analytics loads only with Analytics consent; marketing only with Marketing consent
+5) Validate `/robots.txt` and `/sitemap.xml`
+6) Perform a Lighthouse run on mobile
 Accessibility
 - Focus rings are visible and consistent: `focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-navy-400`
 - Skip link: a visually hidden link becomes visible on focus; component `SkipToContent` targets `#main-content`

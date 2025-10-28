@@ -8,7 +8,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint .",
-    "format": "prettier --write ."
+  "format": "prettier --write .",
+  "typecheck": "tsc --noEmit",
+  "check": "pnpm run typecheck && pnpm run lint"
   },
   "dependencies": {
     "next": "latest",
